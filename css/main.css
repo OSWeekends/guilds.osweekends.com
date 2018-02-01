@@ -1,6 +1,5 @@
 body {
     height: 100% ;
-    //background-image: linear-gradient(to bottom, #fff 65% , var(--blueOSW) 100% ) ;
     background-position: bottom ;
     background-repeat: no-repeat ;
     background-attachment: fixed ;
@@ -42,7 +41,6 @@ body {
     margin: 1% ;
     border-radius: 100% ;
     overflow: hidden ;
-    //opacity: .45 ;
     border: 8px solid var(--blueOSW) ;
     box-sizing: border-box ;
     }
@@ -69,7 +67,6 @@ body {
     background-color: #000 ;
     color: #fff ;
     padding: 1.25em 2.2em ;
-    //background-color: var(--blueOSW) ;
     background-image: linear-gradient(to bottom, #1B5DCC 0% , var(--blueOSW) 100% ) ;
     margin: 2em auto ;
     border-radius: .4em ;
