@@ -19,17 +19,21 @@
 
     firebase.auth().signInWithPopup(provider).then(result => {
       const authData = result.user.providerData[0];
+      
+      const userUid = firebase.auth().currentUser.uid
       const guilderData = {
         "avatar": result.additionalUserInfo.profile.avatar_url,
         "name": result.additionalUserInfo.profile.name,
         "login": result.additionalUserInfo.profile.login
       };
-      guildersRef.child(authData.uid).update({
+      
+      guildersRef.child(userUid).update({
+        "uid": userUid,
         "authData": authData,
         "user": result.additionalUserInfo
       });
 
-      avatarsRef.child(authData.uid).update(guilderData);
+      avatarsRef.child(userUid).update(guilderData);
 
       showModal("good", "¡Ya eres del equipo!<br>Pronto contactará contigo alguien de OSW.", () => {
         document.querySelector(".guilders > ul").innerHTML += `<li class="newGuilder">
