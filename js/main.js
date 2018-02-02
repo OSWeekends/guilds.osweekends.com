@@ -1,67 +1,70 @@
-        const config = {
-          apiKey: "AIzaSyC5LhSMIpkBhdaOrKf5d7Q2wu6Cb5V8fJc",
-          authDomain: "guilds-osw.firebaseapp.com",
-          databaseURL: "https://guilds-osw.firebaseio.com",
-          projectId: "guilds-osw",
-          storageBucket: "guilds-osw.appspot.com",
-          messagingSenderId: "919919244515"
-        };
+((() => {
 
-        firebase.initializeApp(config);
+  const config = {
+    apiKey: "AIzaSyC5LhSMIpkBhdaOrKf5d7Q2wu6Cb5V8fJc",
+    authDomain: "guilds-osw.firebaseapp.com",
+    databaseURL: "https://guilds-osw.firebaseio.com",
+    projectId: "guilds-osw",
+    storageBucket: "guilds-osw.appspot.com",
+    messagingSenderId: "919919244515"
+  };
 
-        const guildersRef = firebase.database().ref().child('guilders');
-        const avatarsRef = firebase.database().ref().child('avatars');
+  firebase.initializeApp(config);
 
-        const guildersSelector = document.querySelector(".guilders > ul");
-        const joinSelector = document.querySelector(".join");
+  const guildersRef = firebase.database().ref().child('guilders');
+  const avatarsRef = firebase.database().ref().child('avatars');
 
-        function joinTheCommunity() {
-          const provider = new firebase.auth.GithubAuthProvider();
+  function joinTheCommunity() {
+    const provider = new firebase.auth.GithubAuthProvider();
 
-          firebase.auth().signInWithPopup(provider).then(result => {
-            const authData = result.user.providerData[0];
-            const guilderData = {
-              "avatar": result.additionalUserInfo.profile.avatar_url,
-              "name": result.additionalUserInfo.profile.name,
-              "login": result.additionalUserInfo.profile.login
-            };
-            guildersRef.child(authData.uid).update({
-              "authData": authData,
-              "user": result.additionalUserInfo
-            });
+    firebase.auth().signInWithPopup(provider).then(result => {
+      const authData = result.user.providerData[0];
+      
+      const userUid = firebase.auth().currentUser.uid
+      const guilderData = {
+        "avatar": result.additionalUserInfo.profile.avatar_url,
+        "name": result.additionalUserInfo.profile.name,
+        "login": result.additionalUserInfo.profile.login
+      };
+      
+      guildersRef.child(userUid).update({
+        "uid": userUid,
+        "authData": authData,
+        "user": result.additionalUserInfo
+      });
 
-            avatarsRef.child(authData.uid).update(guilderData)
+      avatarsRef.child(userUid).update(guilderData);
 
-            showModal("good", "¡Ya eres del equipo!<br>Pronto contactará contigo alguien de OSW.", () => {
-              joinSelector.style.display = "none";
-              guildersSelector.innerHTML += `<li class="newGuilder">
+      showModal("good", "¡Ya eres del equipo!<br>Pronto contactará contigo alguien de OSW.", () => {
+        document.querySelector(".guilders > ul").innerHTML += `<li class="newGuilder">
                     <img class="flexibleMedia" src="${guilderData.avatar}" alt="${guilderData.name} (${guilderData.login})">
-                </li>`
-            })
+                </li>`;
+        document.querySelector(".join").style.display = "none";
+      });
 
-          }).catch(error => {
-            showModal("bad", "Tenemos un error con la autentificación. Por favor intentalo de nuevo o contactanos en <a target='_blank' href='https://twitter.com/oswguilds'>@OSWGuilds</a>")
-            console.warn("Login Failed!", error);
-          });
-        }
+    }).catch(error => {
+      showModal("bad", "Tenemos un error con la autentificación. Por favor intentalo de nuevo o contactanos en <a target='_blank' href='https://twitter.com/oswguilds'>@OSWGuilds</a>");
+    });
+  }
 
-        function addGuilders(snapshot) {
-          const guilders = snapshot.val();
-          for (const guilderID in guilders) {
-            const guilder = guilders[guilderID];
-            guildersSelector.innerHTML += `<li>
+  function addGuilders(snapshot) {
+    const guilders = snapshot.val();
+    for (const guilderID in guilders) {
+      const guilder = guilders[guilderID];
+      document.querySelector(".guilders > ul").innerHTML += `<li>
                     <img class="flexibleMedia" src="${guilder.avatar}" alt="${guilder.name} (${guilder.login})">
-                </li>`
-          }
-        }
+                </li>`;
+    }
+  }
 
-        function removeModal() {
-          document.querySelector(".modal").outerHTML = "";
-        }
+  function removeModal(next) {
+    document.querySelector(".modal").outerHTML = "";
+    next();
+  }
 
-        function showModal(status, msg, next) {
+  function showModal(status, msg, next) {
 
-          document.body.innerHTML += `
+    document.body.innerHTML += `
             <div class="modal">
                 <div class="mensaje">
                     <i class="ico ${status}"></i><p>${msg}</p>
@@ -69,10 +72,11 @@
                 </div>
             </div>`;
 
-          document.querySelector(".modal").addEventListener("click", () => {
-            removeModal(next)
-          })
-        }
+    document.querySelector(".modal").addEventListener("click", () => {
+      removeModal(next);
+    });
+  }
 
-        avatarsRef.once("value", addGuilders);
-        joinSelector.addEventListener("click", joinTheCommunity)
+  avatarsRef.once("value", addGuilders);
+  document.querySelector(".join").addEventListener("click", joinTheCommunity);
+}))();
