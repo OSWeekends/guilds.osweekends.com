@@ -17,19 +17,18 @@
     "type": "git",
     "url": "git://github.com/OSWeekends/guilds.osweekends.com"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "dependencies": {
-    "pillars": "*"
+    "pillars": ">=0.6.4",
+    "passport": "*",
+    "passport-github2": "*"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "engines": {
     "node": ">=6.9.5"
   },
   "main": "./index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "preferGlobal": false,
   "readmeFilename": "README.md",
   "license": "MIT"
