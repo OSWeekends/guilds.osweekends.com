@@ -21,7 +21,8 @@
   "dependencies": {
     "pillars": ">=0.6.4",
     "passport": "*",
-    "passport-github2": "*"
+    "passport-github2": "*",
+    "mongodb": "*"
   },
   "devDependencies": {},
   "engines": {

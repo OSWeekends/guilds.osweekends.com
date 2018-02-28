@@ -1,21 +1,69 @@
+// jshint strict:true, node:true, esnext: true, camelcase:true, curly:true, maxcomplexity:15, newcap:true
+"use strict";
 
-var config = require("./config.json");
+const config = require("./config.json");
+
+// Pillars require
+const project = require('pillars').configure({
+  debug: true,
+  renderReload: true
+});
+const {Route, Middleware} = global;
+
+const i18n = project.i18n;
+i18n.load('guilds', './languages');
+i18n.languages = ['es_ES'];
+
+// Setup default HTTP service
+project.services.get('http').configure({port:3000}).start();
+
+
+// Mongo config
+const MongoClient = require('mongodb').MongoClient;
+let DB = false;
+MongoClient.connect("mongodb://localhost:27017", function(e, client) {
+  if(e) {
+    console.log("Mongo connect Error.",e);
+  } else {
+    DB = client.db("guilds");
+    console.log("Mongo connect Succes.");
+  }
+});
+
+
+
 
 // Passport requires
-var passport = require('passport');
-var GithubStrategy = require('passport-github2').Strategy;
+const passport = require('passport');
+const GithubStrategy = require('passport-github2').Strategy;
 
 // Passport Facebook strategy
 
-var GITHUB_CLIENT_ID = config.githubClientId;
-var GITHUB_CLIENT_SECRET = config.githubSecret;
-var GITHUB_CALLBACK = "http://localhost:3000/passport/github";
+const GITHUB_CLIENT_ID = config.githubClientId;
+const GITHUB_CLIENT_SECRET = config.githubSecret;
+const GITHUB_CALLBACK = "http://localhost:3000/login";
 passport.use(new GithubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
     callbackURL: GITHUB_CALLBACK 
   },function(accessToken, refreshToken, profile, done) {
-    done(null, profile);
+    const users = DB.collection("users");
+    users.findOneAndUpdate(
+        {
+          githubId : profile.id
+        }, {
+          $set:{
+            githubId : profile.id,
+            githubProfile: profile
+          },
+          $push : {logins:Date.now()}
+        }, {
+          upsert : true,
+          returnOriginal: false
+        }, function(error, result){
+          return done(error, result.value); // Object.assign(profile,result.value)
+        }
+    );
   }
 ));
 
@@ -28,63 +76,48 @@ passport.deserializeUser(function(id, done) {
 });
 
 
-// Pillars require
-var project = require('pillars').configure({
-  debug: true,
-  renderReload: true
-});
-
-var i18n = project.i18n;
-i18n.load('guilds', './languages');
-i18n.languages = ['es_ES'];
-
-// Setup default HTTP service
-project.services.get('http').configure({timeout:8000,port:3000}).start();
-
 // Apply classic Connect middleware as Pillars middleware (Basic, only naming middleware)
-project.middleware.add(Middleware({id:"passportInitialize"},passport.initialize()));
-project.middleware.add(Middleware({id:"passportSession"},passport.session()));
+project.middleware.add(new Middleware({id:"passportInitialize"},passport.initialize()));
+project.middleware.add(new Middleware({id:"passportSession"},passport.session()));
 
+const loginRedirectPath = "/info";
 
-
-// Create new Route container
-var PassportCtrl = Route({
-    id: 'passport',
-    path:'/passport',
-    method:["get"],
-    session: true    // All sub-routes inherited session support
-  },
-  function(gw){
-    // Show links to login options:
-    gw.html(
-      '<a href="/passport/github">Github login</a>'
-    );
-  }
-);
-
-// Login success, shows the session.
-PassportCtrl.routes.add(Route({
-  path:'/view-session',
+// Login
+project.routes.add(new Route({
+  id: 'login',
+  path:'/login',
   session: true
-}, function(gw){
-  gw.json(gw.session,{deep:0});
-}));
-
-// Passport Github strategy login controller
-PassportCtrl.routes.add(Route({
-  id: 'github',
-  path:'/github',
-  method:["get"]
 },
-// Add strategy middleware
-passport.authenticate('github',{ successRedirect: '/passport/view-session', failureRedirect: '/passport?error=facebook' })
+  // Add strategy middleware
+  passport.authenticate('github',{ successRedirect: '/info', failureRedirect: loginRedirectPath })
 ));
 
-// Finally add the Passport controller to the project
-// You can create a Passport login system and encapsulate as only one Route/Component, and use on any project.
-project.routes.add(PassportCtrl);
 
-project.routes.add(Route({
+// Login redirect
+project.routes.add(new Route({
+  id: 'login',
+  path: loginRedirectPath,
+  session: true
+}, function(gw){
+
+  getAllUsers().then(function(users){
+    const userIds = users.map(function(e, i){
+      return e.githubId;
+    });
+    gw.json({
+      session: gw.session,
+      allUsers : userIds
+    }, {deep:0});
+  }).catch(function(error){
+    gw.error(error);
+  });
+  
+}
+));
+
+
+// Static directory service
+project.routes.add(new Route({
   id:'static',
   path:'/*:path',
   directory:{
@@ -92,3 +125,15 @@ project.routes.add(Route({
     listing:true
   }
 }));
+
+function getAllUsers(){
+  return new Promise(function (resolve, reject) {
+    DB.collection("users").find({}).project({}).toArray(function(error, docs) {
+      if(!error){
+        resolve(docs);
+      } else {
+        reject(error);
+      }
+    });
+  });
+}
