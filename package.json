@@ -1,0 +1,36 @@
+{
+  "name": "guilds.osweekends.com",
+  "description": "...",
+  "version": "0.0.1",
+  "contributors": [
+    {
+      "name": "Chelo Quilón Gomez",
+      "email": "cheloq@gmail.com"
+    },
+    {
+      "name": "Javier Gallego Martín",
+      "email": "bifuer@gmail.com"
+    }
+  ],
+  "homepage": "https://github.com/OSWeekends/guilds.osweekends.com",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/OSWeekends/guilds.osweekends.com"
+  },
+  "keywords": [
+  ],
+  "dependencies": {
+    "pillars": "*"
+  },
+  "devDependencies": {
+  },
+  "engines": {
+    "node": ">=6.9.5"
+  },
+  "main": "./index.js",
+  "scripts": {
+  },
+  "preferGlobal": false,
+  "readmeFilename": "README.md",
+  "license": "MIT"
+}
