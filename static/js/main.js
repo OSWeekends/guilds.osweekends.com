@@ -78,5 +78,7 @@
   }
 
   avatarsRef.once("value", addGuilders);
-  document.querySelector(".join").addEventListener("click", joinTheCommunity);
+  document.querySelector(".join").addEventListener("click", function(){
+    window.location.href = "/guilds";
+  });
 }))();
