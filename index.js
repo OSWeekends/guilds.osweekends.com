@@ -83,7 +83,6 @@ project.routes.add(new Route({
           } else {
             gw.json({result:1});
           }
-          gw.json(result);
         }).catch(function(error){
           gw.statusCode = 500;
           gw.json({error:error});
