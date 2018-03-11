@@ -19,10 +19,11 @@
   },
   "keywords": [],
   "dependencies": {
-    "pillars": ">=0.6.4",
+    "mongodb": "*",
     "passport": "*",
     "passport-github2": "*",
-    "mongodb": "*"
+    "pillars": ">=0.6.4",
+    "pug": "^2.0.1"
   },
   "devDependencies": {},
   "engines": {
