@@ -88,6 +88,15 @@ nav ul li a img{}
 	margin:0 10px;
 }
 
+.guild h2{
+	max-width: 80%;
+	margin: 0 auto;
+	font-family: 'Roboto Slab', serif;		
+	color: #333333;
+	text-align: right;
+	padding: 10px;
+}
+
 .intro{
 	border-top: 1px solid #dddddd;
 	padding: 20px 0 10px 0;
