@@ -38,23 +38,16 @@ require("./src/mongoSessions")(project);
 require("./src/mongoPassport")(project);
 
 
-// Dev view
+// Guilds view
 project.routes.add(new Route({
-  path: "/pruebas",
+  path: "/",
   session: true,  // active sessions
   passport: true, // force automatic PassportGithub login
 }, function(gw){
-  gw.session.counter = gw.session.counter || 0;
-  gw.session.counter++; 
-  project.DB.collection("users").find({}).project({}).toArray().then(function(users){
-    const userIds = users.map(function(e, i){
-      return e.githubId;
+  project.DB.collection("guilds").find({}).project({}).toArray().then(function(guilds){
+    gw.render("./templates/home.pug", {
+      guilds
     });
-    gw.json({
-      session: gw.session,
-      user: gw.user,
-      allUsers : userIds
-    }, {deep:0});
   }).catch(function(error){
     gw.error(500, error);
   });
@@ -103,4 +96,3 @@ project.routes.add(new Route({
     listing:true
   }
 }));
-

@@ -22,8 +22,7 @@
     "mongodb": "*",
     "passport": "*",
     "passport-github2": "*",
-    "pillars": ">=0.6.4",
-    "pug": "^2.0.1"
+    "pillars": ">=0.6.4"
   },
   "devDependencies": {},
   "engines": {
