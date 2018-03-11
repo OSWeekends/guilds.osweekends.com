@@ -31,7 +31,7 @@ Crear una tabla `guilds` en una base de datos con el nombre `guilds`, añadir la
             ],
             "wanted" : [ 
                 "Se busca... Lo he olvidado...",
-                "En busca y captura: frontend vuenisimo, recompensa aquí"
+                "En busca y captura: frontend vuenisim@, recompensa aquí"
             ],
             "status" : 0,          // Hay que definir los estados y ponerle un iconcito
             "repo" : "https://..." // El repo en github
