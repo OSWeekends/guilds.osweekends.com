@@ -38,20 +38,7 @@ require("./src/mongoSessions")(project);
 require("./src/mongoPassport")(project);
 
 
-// Guilds view
-project.routes.add(new Route({
-  path: "/",
-  session: true,  // active sessions
-  passport: true, // force automatic PassportGithub login
-}, function(gw){
-  project.DB.collection("guilds").find({}).project({}).toArray().then(function(guilds){
-    gw.render("./templates/home.pug", {
-      guilds
-    });
-  }).catch(function(error){
-    gw.error(500, error);
-  });
-}));
+
 
 // API
 project.routes.add(new Route({
@@ -66,25 +53,58 @@ project.routes.add(new Route({
       if(ObjectID.isValid(gw.params.guild)){
         project.DB.collection("guilds").update({
           _id:(new ObjectID.createFromHexString(gw.params.guild)),
-          users:{$ne:gw.user._id}
+          guilders:{$ne:gw.user._id}
         },{
-          $push: {users:gw.user._id}
+          $push: {guilders: {_id: gw.user._id}}
         }).then(function(query){
           if(query.result.nModified != 1){
-            gw.statusCode = 406;
-            gw.json({error:gw.i18n('pillars.statusCodes',{code:gw.statusCode})});
+            // gw.statusCode = 406;
+            // gw.json({error:gw.i18n('pillars.statusCodes',{code:gw.statusCode})});
+            gw.error(406);
           } else {
-            gw.json({result:1});
+            //gw.json({result:1});
+            gw.redirect("/guilds");
           }
         }).catch(function(error){
-          gw.statusCode = 500;
-          gw.json({error:error});
+          // gw.statusCode = 500;
+          // gw.json({error:error});
+          gw.error(500, error);
         });
       } else {
         gw.error(400);
       }
     })
   ]
+}));
+
+// Guilds view
+project.routes.add(new Route({
+  path: "/guilds",
+  session: true,  // active sessions
+  passport: true, // force automatic PassportGithub login
+}, function(gw){
+  Promise.all([
+    project.DB.collection("users").find({}).project({}).toArray(),
+    project.DB.collection("guilds").find({}).project({}).toArray()
+  ]).then(function(results){
+    const users = results[0];
+    const guilds = results[1];
+    gw.render("./templates/home.pug", {
+      users : function(_id){
+        return users.find(function(user){
+          return user._id.toString() === _id.toString();
+        });
+      },
+      inGuilders : function(guilders = []){
+        return guilders.find(function(guilder){
+          return guilder._id.toString() === gw.user._id.toString();
+        });
+      },
+      guilds
+    });
+  }).catch(function(error){
+    gw.error(500, error);
+  });
 }));
 
 // Static directory service

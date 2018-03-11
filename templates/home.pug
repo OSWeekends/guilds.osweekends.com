@@ -9,96 +9,80 @@ html
 		main
 			header.header
 				h1.logo
-					span OSWGuilds
 					img(src="img/OSWGuilds-logo-blanco.svg" alt="Open Source Weekends Guilds")
+					span OSWGuilds
 				nav
 					ul
-						li 
-							a(href='#1')
-								img(class='logo-guild' src="img/logo.png" alt="")
-						li 
-							a(href='#2')
-								img(class='logo-guild' src="img/logo.png" alt="")
-						li 
-							a(href='')
-								img(class='logo-guild' src="img/logo.png" alt="")
-						li 
-							a(href='')
-								img(class='logo-guild' src="img/logo.png" alt="")
+						each guild, index in guilds
+							li 
+								a(href="#guild-"+guild._id)
+									if guild.flag
+										img.logo-guild(alt=guild.name+" logo" src='img/flags/'+guild.flag)
+									else
+										img.logo-guild(src="img/logo.png" alt=guild.name + " logo")
 
-			section.guild
-				header
-					h1
-						img.logo-guild(src="img/logo.png" alt="")
-						span OSW Helpers Guild
-					
-					div.intro
-						p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu erat in dui dictum porta. Vivamus maximus magna tellus, id imperdiet erat pellentesque vel. Vestibulum pharetra nulla non molestie scelerisque. Donec sapien ex, porta sit amet massa id, ullamcorper volutpat justo. Nullam malesuada lacus turpis, id imperdiet metus tempus in. Donec enim nibh, blandit vel efficitur vel, commodo quis ligula. Mauris a pulvinar est, a sagittis erat. Integer sodales eleifend nulla, id fringilla orci pharetra eu. Duis tincidunt placerat magna, nec dignissim ex porttitor sed. Proin efficitur neque at ex ultricies, vitae maximus turpis vulputate.
 
-						p Nam ullamcorper mi nec urna posuere, vel rhoncus massa laoreet. Vestibulum dapibus ac massa ac venenatis. Maecenas maximus lectus non varius placerat. Sed consectetur tincidunt malesuada. In auctor eu purus sit amet accumsan. Aenean in facilisis sem, ac rutrum justo. Morbi accumsan scelerisque sapien, a interdum sem faucibus a. In hac habitasse platea dictumst.
+			each guild, index in guilds
+				section.guild(id="guild-"+guild._id)
+					header
+						h1
+							if guild.flag
+								img.logo-guild(src="img/flags/"+guild.flag alt=guild.name + " logo")
+							else
+								img.logo-guild(src="img/logo.png" alt=guild.name + " logo")
+							span= guild.name
+						
+						div.intro
+							p=guild.motto
 
-						p + info en: enlace
-					div.cta
-						button(type='button' class='join btn btn-success') Me lío :D !!				
-				h2 Proyectos
-				table.table
-					thread
-						th(scope="col") Proyecto
-						th(scope="col") Repo						
-						th(scope="col") Stack
-						th(scope="col") Estado						
-						th(scope="col") Se busca...
-					tbody
-					tr
-						td
-							a(href="https://github.com/OSWeekends/memezinga") Memezinga
-						td
-							a(href="http://osweekends.com/memezinga/") Web
-						td HTML5, CSS3, JS
-						td En Desarrollo						
-						td
-							ul
-								li Frontend
-								li Documentación
-								li Hacedor de ejemplos
-				h2 Guilders
-
-			section.guild
-				header
-					h1
-						img(class='logo-guild' src="img/logo.png" alt="Adalab")
-						span Adalab
-					
-					div(class='intro')
-						p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu erat in dui dictum porta. Vivamus maximus magna tellus, id imperdiet erat pellentesque vel. Vestibulum pharetra nulla non molestie scelerisque. Donec sapien ex, porta sit amet massa id, ullamcorper volutpat justo. Nullam malesuada lacus turpis, id imperdiet metus tempus in. Donec enim nibh, blandit vel efficitur vel, commodo quis ligula. Mauris a pulvinar est, a sagittis erat. Integer sodales eleifend nulla, id fringilla orci pharetra eu. Duis tincidunt placerat magna, nec dignissim ex porttitor sed. Proin efficitur neque at ex ultricies, vitae maximus turpis vulputate.
-
-					div(class='cta')
-						button(type='button' class='join btn btn-success') Unirme!
-				table(class="table")
-					thread
-						th(scope="col") Proyecto
-						th(scope="col") Web
-						th(scope="col") Contacto
-						th(scope="col") Tecnologías
-						th(scope="col") Estado
-						th(scope="col") Versión
-						th(scope="col") Se busca...
-					tbody
-					tr
-						td
-							a(href="https://github.com/OSWeekends/memezinga") Memezinga
-						td
-							a(href="http://osweekends.com/memezinga/") Web
-						td
-							a(href="https://github.com/UlisesGascon") Ulises
-						td HTML5, CSS3, JS
-						td En Desarrollo
-						td 1.0.0
-						td
-							ul
-								li Frontend
-								li Documentación
-								li Hacedor de ejemplos
+							p + Info en: 
+								a(href=guild.readme) Readme
+						if !inGuilders(guild.guilders)
+							div.cta
+								a(href="/api/guilds/"+ guild._id +"/join" type='button' class='join btn btn-success') Me lío :D !!
+					h2 Proyectos
+					table.table
+						thead
+							th(scope="col") Proyecto
+							th(scope="col") Repo						
+							th(scope="col") Stack
+							th(scope="col") Estado						
+							th(scope="col") Se busca...
+						tbody
+							if guild.projects
+								each project, index in guild.projects
+									tr
+										td=project.name
+										td
+											a(href=project.repo) link
+										td 
+											ul
+												each tech, index in project.stack
+													li(class="tech-" + tech)=tech
+										td(class="status-" + project.status)=project.status				
+										td
+											ul
+												each profile, index in project.wanted
+													li=profile
+					h2 Guilders
+					table.table
+						thead
+							th(scope="col") Foto
+							th(scope="col") Nombre						
+							th(scope="col") Github
+						tbody
+							if guild.guilders
+								each guilder, index in guild.guilders
+									- const user = users(guilder._id);
+									if user
+										- const profile = user.githubProfile;
+										tr
+											td
+												img.photo-guilder(src=profile.photos[0].value alt= profile.displayName + " photo.")
+											td=profile.displayName
+											td
+												a(href=profile.profileUrl) Link
+			
 
 
 
