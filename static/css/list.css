@@ -2,27 +2,29 @@ main{
 	
 }
 main header.header{
-	
 	display: block;
-	
-	
 	width: 100%;
-	background-color:rgba(255,255,255,0.8);
-	
-}
-.table{
-    max-width: 80%;
-    margin:0 auto;
 }
 
-.table ul{
-    padding: 0;
+main header .logo{
+    margin: 20px 0 20px 0;
+    text-align: center;
+    text-indent: -10000;
+}
+main header .logo span{
+	display: none;
 }
 
-img.logo-guild{
-	max-width: 100px;
+main header .logo img{
+    max-width: 25%;
 }
 
+
+/*
+
+	BARRA NAVEGACIÓN CON BANDERAS
+
+*/
 nav{
 	max-width: 80%;
 	margin: 0 auto;
@@ -37,24 +39,12 @@ nav ul li{
 	display: inline-block;
 	padding: 0 10px;
 }
-nav ul li a{
 
-}
-nav ul li a img{}
+/*
 
-.logo{
-    margin: 20px 0 20px 0;
-    text-align: center;
-    text-indent: -10000;
-}
-.logo span{
-	display: none;
-}
-.logo img{
-    max-width: 25%;
-}
+	DATOS DE LA GUILD
 
-
+*/
 .guild{
 	border-top: 10px solid #eeeeee;
 	border-bottom: 20px solid #eeeeee;
@@ -67,13 +57,15 @@ nav ul li a img{}
 	max-width: 80%;
 }
 
-.guild link{
-	
+.guild img.logo-guild{
+	max-width: 100px;
 }
+
 .guild h1{
 	position: relative;
 	padding: 15px 0;
 	height: 70px;
+	border-bottom: 1px solid #dddddd;
 }
 .guild h1 span{	
 	position: absolute;
@@ -81,9 +73,6 @@ nav ul li a img{}
 	color: #333333;
 	margin: 0 10px;
 	font-family: 'Roboto Slab', serif;	
-}
-.guild img{
-	
 }
 
 .guild h2{
@@ -93,10 +82,11 @@ nav ul li a img{}
 	color: #333333;
 	text-align: right;
 	padding: 10px;
+	border-bottom: 1px solid #eeeeee;
 }
 
+
 .intro{
-	border-top: 1px solid #dddddd;
 	padding: 20px 0 10px 0;
 }
 
@@ -112,32 +102,50 @@ nav ul li a img{}
 	margin: 0 20px;
 }
 
-.photo-guilder{
-	max-width: 75px;
+.join{
+	display: block;
 }
 
-.join {
-    display: block ;
-    font-size: 1rem ;
-    -webkit-font-smoothing: antialiased ;
-    background-color: #000 ;
-    color: #fff ;
-    padding: 1.25em 2.2em ;
-    background-image: linear-gradient(to bottom, #1B5DCC 0% , var(--blueOSW) 100% ) ;
-    margin: 2em auto ;
-    border-radius: .4em ;
-    font-weight: 700 ;
-    cursor: pointer ;
-    transition: all .15s ;
-    letter-spacing: 3px ;
-    box-shadow: inset 0 -3px 0  rgba(0,0,40,.25) ;
-    }
+/*
 
-    .join:hover {
-        background-color: dodgerblue ;
-        transform: scale(1.1) ;
-        }
+	LISTADO PROYECTOS
 
-.join:hover i {
-    animation: shake .5s .2s ;
+*/
+
+.table{
+    max-width: 80%;
+    margin:0 auto;
+}
+
+.table ul{
+    padding: 0;
+}
+
+/*
+
+	LISTADO GUILDERS
+
+*/
+
+.guilders{
+	max-width: 80%;
+	margin: 0 auto;
+}
+
+.guilders ul{
+	list-style-type: none;
+	text-align: center;
+	padding: 10px 0;
+}
+
+.guilders ul li{
+	padding: 5px 10px;
+	display: inline-block;
+	max-width: 165px;
+	text-align: center;
+}
+
+.guilders img.photo-guilder{
+	padding: 0 5px 0 0;
+	max-width: 150px;
 }

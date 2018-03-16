@@ -44,7 +44,7 @@ html
 								a(href="/api/guilds/"+ guild._id +"/join" type='button' class='join btn btn-success') Me lío :D !!
 					
 					h2 Proyectos
-					table.table
+					table.table.projects
 						thead
 							th(scope="col") Proyecto
 							th(scope="col") Repo						
@@ -68,24 +68,18 @@ html
 												each profile, index in project.wanted
 													li=profile
 					h2 Guilders
-					table.table
-						thead
-							th(scope="col") Foto
-							th(scope="col") Nombre						
-							th(scope="col") Github
-						tbody
+					div.guilders
+						ul
 							if guild.guilders
 								each guilder, index in guild.guilders
 									- const user = users(guilder._id);
 									if user
 										- const profile = user.githubProfile;
-										tr
-											td
-												img.photo-guilder(src=profile.photos[0].value alt= profile.displayName + " photo.")
-											td=profile.displayName
-											td
-												a(href=profile.profileUrl) Link
-			
+										li
+											img.photo-guilder(src=profile.photos[0].value alt= profile.displayName + " photo.")
+											a(href=profile.profileUrl)=profile.displayName
+											
+		
 
 
 
