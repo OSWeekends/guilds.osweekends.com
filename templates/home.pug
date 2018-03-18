@@ -19,7 +19,7 @@ html
 									if guild.flag
 										img.logo-guild(alt=guild.name+" logo" src='img/flags/'+guild.flag)
 									else
-										img.logo-guild(src="img/logo.png" alt=guild.name + " logo")
+										img.logo-guild(src="http://via.placeholder.com/80x80" alt=guild.name + " logo")
 
 
 			each guild, index in guilds
@@ -29,17 +29,20 @@ html
 							if guild.flag
 								img.logo-guild(src="img/flags/"+guild.flag alt=guild.name + " logo")
 							else
-								img.logo-guild(src="img/logo.png" alt=guild.name + " logo")
+								img.logo-guild(src="http://via.placeholder.com/80x80" alt=guild.name + " logo")
 							span= guild.name
 						
 						div.intro
 							p=guild.motto
 
-							p + Info en: 
-								a(href=guild.readme) Readme
+							if guild.readme
+								p + Info en: 
+									a(href=guild.readme) Readme
+						
 						if !inGuilders(guild.guilders)
 							div.cta
 								a(href="/api/guilds/"+ guild._id +"/join" type='button' class='join btn btn-success') Me lío :D !!
+					
 					h2 Proyectos
 					table.table
 						thead
