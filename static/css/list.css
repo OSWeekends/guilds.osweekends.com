@@ -1,5 +1,6 @@
 main{
-	
+	font-family: 'Roboto Slab', serif;
+	color: #0741a2;
 }
 main header.header{
 	display: block;
@@ -46,33 +47,42 @@ nav ul li{
 
 */
 .guild{
-	border-top: 10px solid #eeeeee;
-	border-bottom: 20px solid #eeeeee;
-	border-radius: 50px;
+	border: 2px solid #0741a2;
+	border-radius: 10px;
 	margin: 20px 5%;
+	padding: 20px;
 }
 
 .guild header{
-	margin:0 auto 20px;
-	max-width: 80%;
 }
 
-.guild img.logo-guild{
-	max-width: 100px;
+.logo-guild{
+	display: inline-block;
+	border: 2px solid #0741a2;
+	border-radius: 100%;
+	padding: 5px;
+	background-color: #fff;
+	width: 68px;
+	height: 68px;
+}
+
+.guild .logo-guild{
+	width: 132px;
+	height: 132px;
 }
 
 .guild h1{
-	position: relative;
-	padding: 15px 0;
-	height: 70px;
-	border-bottom: 1px solid #dddddd;
+	margin-bottom:0;
+	padding-bottom: 10px;
+}
+.guild h1 .logo-guild{
+	margin-right: 30px;
 }
 .guild h1 span{	
-	position: absolute;
-	right: 0;
-	color: #333333;
-	margin: 0 10px;
-	font-family: 'Roboto Slab', serif;	
+  text-align: right;
+  padding-bottom: 30px;
+  display: inline-block;
+  vertical-align: bottom;
 }
 
 .guild h2{
@@ -87,7 +97,10 @@ nav ul li{
 
 
 .intro{
-	padding: 20px 0 10px 0;
+  padding: 20px;
+  border: 1px dashed grey;
+  margin-bottom: 20px;
+  border-radius: 10px;
 }
 
 .intro p{
@@ -96,14 +109,26 @@ nav ul li{
 
 .cta{
 	text-align: center;
-}
-
-.cta button{
-	margin: 0 20px;
+	padding: 20px 10px;
 }
 
 .join{
-	display: block;
+  display: block;
+  padding: 10px 20px;
+  background-color: #18438c;
+  color: #ffffff;
+  font-size: 25px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.4);
+  transition: 0.3s ease-in-out;
+}
+
+.join:hover {
+	color: #fff;
+	background-color: #1055ca;
+  box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.6);
+  text-decoration: none;
 }
 
 /*
@@ -128,24 +153,21 @@ nav ul li{
 */
 
 .guilders{
-	max-width: 80%;
-	margin: 0 auto;
 }
 
 .guilders ul{
 	list-style-type: none;
-	text-align: center;
-	padding: 10px 0;
+	padding: 20px 20px;
 }
 
 .guilders ul li{
-	padding: 5px 10px;
-	display: inline-block;
-	max-width: 165px;
-	text-align: center;
+  padding: 10px 20px;
+  display: inline-block;
+  text-align: center;
 }
 
 .guilders img.photo-guilder{
-	padding: 0 5px 0 0;
-	max-width: 150px;
+  max-width: 64px;
+  border-radius: 5px;
+  margin: 10px;
 }

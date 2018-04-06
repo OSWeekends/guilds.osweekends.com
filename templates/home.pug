@@ -19,7 +19,7 @@ html
 									if guild.flag
 										img.logo-guild(alt=guild.name+" logo" src='img/flags/'+guild.flag)
 									else
-										img.logo-guild(src="http://via.placeholder.com/80x80" alt=guild.name + " logo")
+										div.logo-guild(title=guild.name + " logo")
 
 
 			each guild, index in guilds
@@ -29,19 +29,19 @@ html
 							if guild.flag
 								img.logo-guild(src="img/flags/"+guild.flag alt=guild.name + " logo")
 							else
-								img.logo-guild(src="http://via.placeholder.com/80x80" alt=guild.name + " logo")
+								div.logo-guild(title=guild.name + " logo")
 							span= guild.name
-						
+
 						div.intro
 							p=guild.motto
 
 							if guild.readme
 								p + Info en: 
 									a(href=guild.readme) Readme
-						
+
 						if !inGuilders(guild.guilders)
 							div.cta
-								a(href="/api/guilds/"+ guild._id +"/join" type='button' class='join btn btn-success') Me lío :D !!
+								a(href="/api/guilds/"+ guild._id +"/join" class='join') Quiero participar, me lío!!!
 					
 					h2 Proyectos
 					table.table.projects
@@ -59,14 +59,16 @@ html
 										td
 											a(href=project.repo) link
 										td 
-											ul
-												each tech, index in project.stack
-													li(class="tech-" + tech)=tech
+											if project.stack
+												ul
+													each tech, index in project.stack
+														li(class="tech-" + tech)=tech
 										td(class="status-" + project.status)=project.status				
 										td
-											ul
-												each profile, index in project.wanted
-													li=profile
+											if project.wanted
+												ul
+													each profile, index in project.wanted
+														li=profile
 					h2 Guilders
 					div.guilders
 						ul

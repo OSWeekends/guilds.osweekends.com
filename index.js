@@ -22,7 +22,8 @@ project.services.get('http').configure({port: config.port}).start();
 // Mongo config
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
-MongoClient.connect('mongodb://localhost:27017', function(e, client) {
+
+MongoClient.connect(config.mongoURL || 'mongodb://localhost:27017', function(e, client) {
   if (e) {
     console.log('Mongo connect Error.', e);
   } else {
