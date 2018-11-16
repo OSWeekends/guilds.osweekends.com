@@ -1,0 +1,10 @@
+{
+  "debug" : true,
+  "hostname" : "",
+  "port" : 8080,
+  "pt": "https",
+  "githubClientId" : "",
+  "githubSecret" : "",
+  "crypt" : "",
+  "mongoURL" : ""
+}

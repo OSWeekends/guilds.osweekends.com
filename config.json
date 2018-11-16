@@ -1,8 +1,0 @@
-{
-  "debug" : true,
-  "hostname" : "localhost",
-  "port" : 3000,
-  "githubClientId" : "97f2cefb4b3c6afccf1d",
-  "githubSecret" : "1b18e9b4af5e1dce660dcde55e1004cc493d9fa7",
-  "crypt" : "3zTvzr3p67VC61jmV54rIYu1545x4TlY"
-}

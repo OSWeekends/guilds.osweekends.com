@@ -5,11 +5,13 @@ const passport = require('passport');
 const GithubStrategy = require('passport-github2').Strategy;
 const {Route, Middleware} = global;
 
+console.log("-------:", config.pt + '://' + config.hostname + ':' + config.port + '/login')
+
 module.exports = function(project) {
   passport.use(new GithubStrategy({
       clientID: config.githubClientId,
       clientSecret: config.githubSecret,
-      callbackURL: 'http://' + config.hostname + ':' + config.port + '/login',
+      callbackURL: config.pt + '://' + config.hostname + ':' + config.port + '/login',
     }, function(accessToken, refreshToken, profile, done) {
       const users = project.DB.collection('users');
       users.findOneAndUpdate(
