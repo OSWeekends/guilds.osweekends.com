@@ -1,5 +1,6 @@
-const express = require('express');
-const config = require('./config');
+const express = require('express'),
+    config = require('./config'),
+    logger = require('./logger');
 
 const app = express();
 
@@ -8,5 +9,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(config.port, () => {
-  console.log(`Server listening on port ${config.port}!`);
+  logger.info(`[INFO] Server listening on port ${config.port}!`);
 });
