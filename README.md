@@ -1,3 +1,6 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/f134080d2fc0399dea5e/maintainability)](https://codeclimate.com/github/OSWeekends/guilds.osweekends.com/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f134080d2fc0399dea5e/test_coverage)](https://codeclimate.com/github/OSWeekends/guilds.osweekends.com/test_coverage)
+
 # Repository for http://guilds.osweekends.com
 
 ## ¡Estamos en una [versión alpha](http://guilds.osweekends.com)!
