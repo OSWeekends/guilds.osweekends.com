@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "idiomatic"
+  ],
+  "env": {
+    "node": 1,
+    "browser": 1
+  }
+}
