@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/OSWeekends/guilds.osweekends.com#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "helmet": "^3.15.0",
+    "winston": "^3.1.0"
   }
 }
