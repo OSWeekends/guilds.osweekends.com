@@ -1,0 +1,22 @@
+{
+  "name": "guilds.osweekends.com",
+  "version": "1.0.0",
+  "description": "Guilds Website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OSWeekends/guilds.osweekends.com.git"
+  },
+  "author": "Open Source Weekends",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/OSWeekends/guilds.osweekends.com/issues"
+  },
+  "homepage": "https://github.com/OSWeekends/guilds.osweekends.com#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
