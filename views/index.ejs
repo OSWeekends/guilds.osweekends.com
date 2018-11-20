@@ -1,0 +1,5 @@
+<% if (!user) { %>
+	<h2>Welcome Friend! Please log in to become a real Guilder!</h2>
+<% } else { %>
+	<h2>👋 <%= user.displayName %>!</h2>
+<% } %>
