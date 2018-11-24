@@ -1,5 +1,14 @@
-<% if (!user) { %>
-	<h2>Welcome Friend! Please log in to become a real Guilder!</h2>
-<% } else { %>
-	<h2>👋 <%= user.displayName %>!</h2>
-<% } %>
+<header>
+	<div class="main-title text-center">
+	   <h1>Guilds Website!</h1>
+	   <% if (!user) { %>
+			<h3>Welcome Friend!</h3>
+		<% } else { %>
+			<h3>👋 <%= user.displayName %>!</h3>
+		<% } %>
+	</div>
+</header>
+
+
+
+

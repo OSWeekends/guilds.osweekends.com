@@ -32,22 +32,22 @@ app.use( express.static( __dirname + '/public' ));
 // Routes
 app.get( '/', ( req, res ) => {
   res.render( 'index', {
-    title: 'Welcome to Guilds.osweekends.com',
-    message: '👋 Guilder!',
-    user: req.user
+    user: req.user,
+    data: req.user ? req.user._json : false
   });
 });
 
 app.get( '/profile', auth.ensureAuthenticated, ( req, res ) => {
   res.render( 'profile', {
     user: req.user,
-    data: req.user._json
+    data: req.user ? req.user._json : false
   });
 });
 
 app.get( '/login', ( req, res ) => {
   res.render( 'login', {
-    user: req.user
+    user: req.user,
+    data: req.user ? req.user._json : false
   });
 });
 
