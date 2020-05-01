@@ -22,7 +22,8 @@
     "mongodb": "*",
     "passport": "*",
     "passport-github2": "*",
-    "pillars": ">=0.7.1"
+    "pillars": ">=0.7.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -37,8 +38,12 @@
     "node": ">=6.9.5"
   },
   "main": "./index.js",
-  "scripts": {},
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
   "preferGlobal": false,
   "readmeFilename": "README.md",
-  "license": "MIT"
+  "license": "MIT",
+  "snyk": true
 }
